@@ -11,6 +11,7 @@
 # production
 /build
 /markup
+/.idea
 
 # misc
 .DS_Store

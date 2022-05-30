@@ -1,5 +1,11 @@
 import {toast} from 'react-toastify';
-import {adaptedMovieType, MovieType, MovieFromServerType, MoviesListFromServerType} from '../types/movie-type';
+import {
+  adaptedMovieType,
+  MovieType,
+  MovieFromServerType,
+  MoviesListFromServerType,
+  MoviesListType
+} from '../types/movie-type';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import dayjs from 'dayjs';
@@ -8,6 +14,7 @@ dayjs.extend(relativeTime);
 
 const HOUR = 60;
 export const BREAK_POINT_COUNT = 140;
+export const TWO_CARDS = 2;
 
 export enum ApiRoute {
   Movies = '/movies',
@@ -29,6 +36,12 @@ export const AppSort = {
   ByDefault: 'Sort by default',
   ByDate: 'Sort by date',
   ByRating:'Sort by rating',
+};
+
+export const FilterButton = {
+  watchlist: 'watchlist',
+  alreadyWatched: 'alreadyWatched',
+  favorite: 'favorite',
 };
 
 export const adaptedToClientMovie = (movie:MovieFromServerType):adaptedMovieType => {
@@ -87,3 +100,15 @@ export const formatYear = (date: string):string => dayjs(date).format('YYYY');
 
 export const getShortDescription = (description: string):string => `${description.slice(0, BREAK_POINT_COUNT)}...`;
 
+export const getFilteredMovies = (moviesList: MoviesListType, filter:string):MoviesListType => {
+  switch (filter) {
+    case AppFilter.WatchList:
+      return moviesList.filter((movie) => movie.userDetails.watchlist);
+    case AppFilter.History:
+      return moviesList.filter((movie) => movie.userDetails.alreadyWatched);
+    case AppFilter.Favorites:
+      return moviesList.filter((movie) => movie.userDetails.favorite);
+    default:
+      return moviesList;
+  }
+};

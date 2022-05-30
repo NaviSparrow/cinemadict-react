@@ -1,5 +1,5 @@
 import {MovieType, MoviesListType} from './movie-type';
-import {CommentsListType} from './comment- type';
+import {CommentsListType} from './comment-type';
 
 export type MainDataType = {
   movies: MoviesListType;

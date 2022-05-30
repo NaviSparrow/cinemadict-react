@@ -56,6 +56,8 @@ export type MovieType = {
   }
 };
 
+export type MoviesListType = MovieType[];
+
 export type adaptedMovieType = {
   id: number;
   comments: number[];
@@ -93,4 +95,9 @@ export type adaptedMovieType = {
   }
 };
 
-export type MoviesListType = MovieType[];
+export type newUserDetailsType = {
+  id: number,
+  key: string,
+  value: boolean,
+};
+

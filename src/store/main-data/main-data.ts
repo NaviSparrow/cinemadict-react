@@ -1,9 +1,9 @@
 import {MainDataType} from '../../types/main-data-type';
 import {createReducer} from '@reduxjs/toolkit';
-import {fillCommentsList, fillMoviesList, fillPopupMovie, changeIsDataLoaded} from '../actions';
+import {fillCommentsList, fillMoviesList, fillPopupMovie, changeIsDataLoaded, changeUserDetails} from '../actions';
 import {StateType} from '../../types/state-type';
 import {MovieType, MoviesListType} from '../../types/movie-type';
-import {CommentsListType} from '../../types/comment- type';
+import {CommentsListType} from '../../types/comment-type';
 
 const initialState: MainDataType = {
   movies: [],
@@ -25,6 +25,13 @@ const mainData = createReducer(initialState, (builder) => {
     })
     .addCase(changeIsDataLoaded, (state, action) => {
       state.isDataLoaded = action.payload;
+    })
+    .addCase(changeUserDetails, (state, action) => {
+      const index = state.movies.findIndex((movie) => movie.id === action.payload.id);
+      state.movies[index] = {
+        ...state.movies[index],
+        userDetails: {...state.movies[index].userDetails, [action.payload.key]: action.payload.value},
+      };
     });
 });
 

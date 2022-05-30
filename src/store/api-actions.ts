@@ -1,7 +1,7 @@
 import {AppThunkActionType} from '../types/thunk-action-type';
 import {adaptMoviesListToClient, ApiRoute} from '../service/const';
 import {changeIsDataLoaded, fillCommentsList, fillMoviesList} from './actions';
-import {CommentPostDataType} from '../types/comment- type';
+import {CommentPostDataType} from '../types/comment-type';
 
 export const fetchMoviesList = ():AppThunkActionType =>
   async (dispatch, _getState, api) => {

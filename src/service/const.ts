@@ -15,6 +15,14 @@ dayjs.extend(relativeTime);
 const HOUR = 60;
 export const BREAK_POINT_COUNT = 140;
 export const TWO_CARDS = 2;
+export const ONE = 1;
+export const TEN = 10;
+export const ELEVEN = 11;
+export const TWENTY = 20;
+export const TWENTY_ONE = 21;
+export const MOVIES_STEP_COUNT = 5;
+export const ESCAPE = 'Escape';
+
 
 export enum ApiRoute {
   Movies = '/movies',
@@ -97,6 +105,8 @@ export const formatRunTime = (time: number): string => {
 };
 
 export const formatYear = (date: string):string => dayjs(date).format('YYYY');
+
+export const formatReleaseDate = (movieReleaseDate:string):string => dayjs(movieReleaseDate).format('DD MMMM YYYY');
 
 export const getShortDescription = (description: string):string => `${description.slice(0, BREAK_POINT_COUNT)}...`;
 

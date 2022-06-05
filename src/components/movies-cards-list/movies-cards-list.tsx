@@ -4,12 +4,13 @@ import MovieCard from '../movie-card/movie-card';
 
 type MoviesListProps = {
   moviesList:MoviesListType;
+  onOpenPopup: () => void;
 }
 
-function MoviesCardsList({moviesList}:MoviesListProps):JSX.Element {
+function MoviesCardsList({moviesList, onOpenPopup}:MoviesListProps):JSX.Element {
   return (
     <div className="films-list__container">
-      {moviesList.map((movie) => <MovieCard key={movie.id} movieCard={movie}/>)}
+      {moviesList.map((movie) => <MovieCard key={movie.id} movieCard={movie} onOpenPopup={onOpenPopup}/>)}
     </div>
   );
 }

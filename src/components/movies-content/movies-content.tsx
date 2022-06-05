@@ -3,15 +3,17 @@ import MoviesCardsList from '../movies-cards-list/movies-cards-list';
 import {useSelector} from 'react-redux';
 import {getMoviesList} from '../../store/main-data/main-data';
 import {getCurrentFilter, getCurrentSort} from '../../store/filters-data/filters-data';
-import {AppSort, getFilteredMovies} from '../../service/const';
+import {AppSort, getFilteredMovies, MOVIES_STEP_COUNT} from '../../service/const';
 import {MoviesListType, MovieType} from '../../types/movie-type';
 import dayjs from 'dayjs';
 import TopRatedMovies from '../top-rated-movies/top-rated-movies';
 import MostCommentedMovies from '../most-commented-movies/most-commented-movies';
 
-const MOVIES_STEP_COUNT = 5;
+type MoviesContentProps = {
+  onOpenPopup: () => void;
+}
 
-function MoviesContent(): JSX.Element {
+function MoviesContent({onOpenPopup}:MoviesContentProps): JSX.Element {
   const [numberToShow, setNumberToShow] = useState(MOVIES_STEP_COUNT);
   const moviesList = useSelector(getMoviesList);
   const currentFilter = useSelector(getCurrentFilter);
@@ -40,7 +42,7 @@ function MoviesContent(): JSX.Element {
     <section className="films">
       <section className="films-list">
         <h2 className="films-list__title visually-hidden">All movies. Upcoming</h2>
-        <MoviesCardsList moviesList={getCurrentMoviesList()} />
+        <MoviesCardsList moviesList={getCurrentMoviesList()} onOpenPopup={onOpenPopup} />
       </section>
       <button
         className={`films-list__show-more ${numberToShow === moviesList.length ? 'visually-hidden' : ''}`}
@@ -48,8 +50,8 @@ function MoviesContent(): JSX.Element {
       >
         Show more
       </button>
-      <TopRatedMovies />
-      <MostCommentedMovies />
+      <TopRatedMovies onOpenPopup={onOpenPopup} />
+      <MostCommentedMovies onOpenPopup={onOpenPopup} />
     </section>
   );
 }

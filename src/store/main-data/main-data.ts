@@ -32,6 +32,14 @@ const mainData = createReducer(initialState, (builder) => {
         ...state.movies[index],
         userDetails: {...state.movies[index].userDetails, [action.payload.key]: action.payload.value},
       };
+      if (state.popupMovie && state.popupMovie.id === action.payload.id) {
+        // eslint-disable-next-line no-console
+        console.log('here');
+        state.popupMovie = {
+          ...state.popupMovie,
+          userDetails: {...state.popupMovie.userDetails, [action.payload.key]: action.payload.value}
+        };
+      }
     });
 });
 

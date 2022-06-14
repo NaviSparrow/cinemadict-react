@@ -16,8 +16,6 @@ function MainPage():JSX.Element {
   const isDataLoaded = useSelector(getIsDataLoaded);
   const popupMovie = useSelector(getPopupMovie);
   const [isPopupShow, setIsPopupShow] = useState(false);
-  // eslint-disable-next-line no-console
-  console.log(isPopupShow);
 
   const openPopup = () => setIsPopupShow(true);
   const closePopup = () => setIsPopupShow(false);

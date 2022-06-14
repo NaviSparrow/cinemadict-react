@@ -21,6 +21,9 @@ function Header():JSX.Element {
       return 'not a fan';
     }
   };
+
+  // eslint-disable-next-line no-console
+  console.log('render header');
   return (
     <header className="header">
       <h1 className="header__logo logo">Cinemaddict</h1>
@@ -36,4 +39,4 @@ function Header():JSX.Element {
   );
 }
 
-export default Header;
+export default React.memo(Header);

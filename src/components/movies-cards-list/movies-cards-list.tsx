@@ -15,4 +15,4 @@ function MoviesCardsList({moviesList, onOpenPopup}:MoviesListProps):JSX.Element 
   );
 }
 
-export default MoviesCardsList;
+export default React.memo(MoviesCardsList, (prevProps:MoviesListProps, nextProps:MoviesListProps) => prevProps.moviesList === nextProps.moviesList);

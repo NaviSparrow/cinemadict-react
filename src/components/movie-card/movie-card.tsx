@@ -63,4 +63,4 @@ function MovieCard({movieCard, onOpenPopup}:MovieCardProps) {
   );
 }
 
-export default MovieCard;
+export default React.memo(MovieCard, (prevProps:MovieCardProps, nextProps:MovieCardProps) => prevProps.movieCard.userDetails === nextProps.movieCard.userDetails );

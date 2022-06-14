@@ -20,4 +20,4 @@ function Sort():JSX.Element {
   );
 }
 
-export default Sort;
+export default React.memo(Sort);

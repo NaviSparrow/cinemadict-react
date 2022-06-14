@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import MoviesCardsList from '../movies-cards-list/movies-cards-list';
 import {useSelector} from 'react-redux';
 import {getMoviesList} from '../../store/main-data/main-data';
@@ -32,17 +32,18 @@ function MoviesContent({onOpenPopup}:MoviesContentProps): JSX.Element {
     else {return 0;}
   };
 
-  const getCurrentMoviesList = (): MoviesListType =>
+  const getCurrentMoviesList = useMemo(():MoviesListType =>
     getFilteredMovies(moviesList, currentFilter)
       .slice()
       .sort(compareFunction)
-      .slice(0, numberToShow);
+      .slice(0, numberToShow)
+  , [currentFilter, moviesList, numberToShow]);
 
   return (
     <section className="films">
       <section className="films-list">
         <h2 className="films-list__title visually-hidden">All movies. Upcoming</h2>
-        <MoviesCardsList moviesList={getCurrentMoviesList()} onOpenPopup={onOpenPopup} />
+        <MoviesCardsList moviesList={getCurrentMoviesList} onOpenPopup={onOpenPopup} />
       </section>
       <button
         className={`films-list__show-more ${numberToShow === moviesList.length ? 'visually-hidden' : ''}`}

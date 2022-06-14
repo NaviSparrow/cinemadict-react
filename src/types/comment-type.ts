@@ -2,7 +2,7 @@ export type CommentType = {
   id: number;
   author: string;
   comment: string;
-  data: string;
+  date: string;
   emotion: string;
 }
 

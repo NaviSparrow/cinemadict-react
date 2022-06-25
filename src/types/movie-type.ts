@@ -96,7 +96,6 @@ export type adaptedMovieType = {
 };
 
 export type newUserDetailsType = {
-  id: number,
   key: string,
   value: boolean,
 };

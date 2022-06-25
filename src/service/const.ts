@@ -22,6 +22,8 @@ export const TWENTY = 20;
 export const TWENTY_ONE = 21;
 export const MOVIES_STEP_COUNT = 5;
 export const ESCAPE = 'Escape';
+export const ENTER = 'Enter';
+export const Control = 'Enter';
 
 
 export enum ApiRoute {

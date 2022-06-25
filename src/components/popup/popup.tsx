@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react';
 import {MovieType, newUserDetailsType} from '../../types/movie-type';
-import {changeUserDetails} from '../../store/actions';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {FilterButton, formatReleaseDate, formatRunTime} from '../../service/const';
 import useEscapeEventListener from '../../hooks/useEscapeEventListener';
 import useLockBodyScroll from '../../hooks/useLockBodyScroll';
-import {fetchCommentsList} from '../../store/api-actions';
-import Comments from '../comments/comments';
+import {changeUserData, fetchCommentsList} from '../../store/api-actions';
+import CommentsSection from '../comments-section/comments-section';
 
 type PopupProps = {
   movieData: MovieType;
@@ -20,14 +19,19 @@ function Popup({movieData, onClose}:PopupProps): JSX.Element {
   const {filmInfo, userDetails, id} = movieData;
   const {title, totalRating, poster, description, runtime, release, genre, ageRating, alternativeTitle, director, writers, actors} = filmInfo;
   const {favorite, watchlist, alreadyWatched} = userDetails;
-
   const dispatch = useAppDispatch();
+
+  const popUpControlButtonClickHandler = ({key, value}:newUserDetailsType) => {
+    const newMovieCardData:MovieType= {
+      ...movieData,
+      userDetails: {...userDetails, [key]: value}
+    };
+    dispatch(changeUserData(newMovieCardData));
+  };
 
   useEffect(() => {
     dispatch(fetchCommentsList(id));
   }, []);
-
-  const popUpControlButtonClickHandler = (newUserDetails:newUserDetailsType) => dispatch(changeUserDetails(newUserDetails));
 
   return (
     <section className="film-details">
@@ -90,7 +94,7 @@ function Popup({movieData, onClose}:PopupProps): JSX.Element {
           <section className="film-details__controls">
             <button type="button" className={ `film-details__control-button ${watchlist ? 'film-details__control-button--active' : ''} film-details__control-button--watchlist`}
               onClick={() => {
-                popUpControlButtonClickHandler({id: id, key: FilterButton.watchlist, value: !watchlist});
+                popUpControlButtonClickHandler({key: FilterButton.watchlist, value: !watchlist});
               }}
               id="watchlist"
               name="watchlist"
@@ -99,18 +103,18 @@ function Popup({movieData, onClose}:PopupProps): JSX.Element {
             <button type="button" className={`film-details__control-button ${alreadyWatched ? 'film-details__control-button--active' : ''} film-details__control-button--watched`}
               id="watched"
               name="watched"
-              onClick={() => popUpControlButtonClickHandler({id: id, key: FilterButton.alreadyWatched, value: !alreadyWatched})}
+              onClick={() => popUpControlButtonClickHandler({key: FilterButton.alreadyWatched, value: !alreadyWatched})}
             >Already watched
             </button>
             <button type="button" className={`film-details__control-button ${favorite ? 'film-details__control-button--active' : ''} film-details__control-button--favorite`}
               id="favorite"
               name="favorite"
-              onClick={() => popUpControlButtonClickHandler({id: id, key: FilterButton.favorite, value: !favorite})}
+              onClick={() => popUpControlButtonClickHandler({key: FilterButton.favorite, value: !favorite})}
             >Add to favorites
             </button>
           </section>
         </div>
-        <Comments />
+        <CommentsSection />
       </form>
     </section>
   );

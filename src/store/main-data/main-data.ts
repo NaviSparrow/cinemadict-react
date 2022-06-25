@@ -1,6 +1,12 @@
 import {MainDataType} from '../../types/main-data-type';
 import {createReducer} from '@reduxjs/toolkit';
-import {fillCommentsList, fillMoviesList, fillPopupMovie, changeIsDataLoaded, changeUserDetails} from '../actions';
+import {
+  fillCommentsList,
+  fillMoviesList,
+  fillPopupMovie,
+  changeIsDataLoaded,
+  replaceMovie
+} from '../actions';
 import {StateType} from '../../types/state-type';
 import {MovieType, MoviesListType} from '../../types/movie-type';
 import {CommentsListType} from '../../types/comment-type';
@@ -26,18 +32,23 @@ const mainData = createReducer(initialState, (builder) => {
     .addCase(changeIsDataLoaded, (state, action) => {
       state.isDataLoaded = action.payload;
     })
-    .addCase(changeUserDetails, (state, action) => {
+    .addCase(replaceMovie, (state, action) => {
       const index = state.movies.findIndex((movie) => movie.id === action.payload.id);
-      state.movies[index] = {
-        ...state.movies[index],
-        userDetails: {...state.movies[index].userDetails, [action.payload.key]: action.payload.value},
-      };
-      if (state.popupMovie && state.popupMovie.id === action.payload.id) {
-        state.popupMovie = {
-          ...state.popupMovie,
-          userDetails: {...state.popupMovie.userDetails, [action.payload.key]: action.payload.value}
-        };
-      }
+      state.movies = [
+        ...state.movies.slice(0, index),
+        action.payload,
+        ...state.movies.slice(index, +1)
+      ];
+      // state.movies[index] = {
+      //   ...state.movies[index],
+      //   userDetails: {...state.movies[index].userDetails, [action.payload.key]: action.payload.value},
+      // };
+      // if (state.popupMovie && state.popupMovie.id === action.payload.id) {
+      //   state.popupMovie = {
+      //     ...state.popupMovie,
+      //     userDetails: {...state.popupMovie.userDetails, [action.payload.key]: action.payload.value}
+      //   };
+      // }
     });
 });
 

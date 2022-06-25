@@ -8,7 +8,9 @@ export type CommentType = {
 
 export type CommentsListType = CommentType[];
 
+export type EmotionsType = 'smile' | 'sleeping' | 'puke' | 'angry' | null;
+
 export type CommentPostDataType = {
   comment: string;
-  emotion: string;
+  emotion: EmotionsType;
 };

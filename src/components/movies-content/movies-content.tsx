@@ -37,7 +37,7 @@ function MoviesContent({onOpenPopup}:MoviesContentProps): JSX.Element {
       .slice()
       .sort(compareFunction)
       .slice(0, numberToShow)
-  , [currentFilter, moviesList, numberToShow]);
+  , [compareFunction, currentFilter, moviesList, numberToShow]);
 
   return (
     <section className="films">

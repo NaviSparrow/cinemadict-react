@@ -1,6 +1,6 @@
 import {createAction} from '@reduxjs/toolkit';
 import {ActionType} from '../types/actions-type';
-import {MovieType, MoviesListType, newUserDetailsType} from '../types/movie-type';
+import {MovieType, MoviesListType} from '../types/movie-type';
 import {CommentsListType} from '../types/comment-type';
 
 export const fillMoviesList = createAction(
@@ -45,9 +45,9 @@ export const changeSort = createAction(
   })
 );
 
-export const changeUserDetails = createAction(
-  ActionType.changeUserDetails,
-  (newUserDetails: newUserDetailsType) => ({
-    payload: newUserDetails,
+export const replaceMovie = createAction(
+  ActionType.replaceMovie,
+  (movie: MovieType) => ({
+    payload: movie,
   })
 );

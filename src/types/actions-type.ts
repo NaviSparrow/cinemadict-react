@@ -4,7 +4,7 @@ export enum ActionType {
   FillPopupMovie = 'main/fillPopupMovie',
   FetchMoviesList = 'main/fetchMoviesList',
   isDataLoaded = 'main/isDataLoaded',
-  changeUserDetails = 'main/changeUserDetails',
+  replaceMovie = 'main/replaceMovie',
   changeFilter = 'filter/changeFilter',
   changeSort = 'filter/changeSort',
 }

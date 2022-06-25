@@ -2,7 +2,8 @@ import React from 'react';
 import {MovieType, newUserDetailsType} from '../../types/movie-type';
 import {BREAK_POINT_COUNT, FilterButton, formatRunTime, formatYear, getShortDescription} from '../../service/const';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
-import {changeUserDetails, fillPopupMovie} from '../../store/actions';
+import {fillPopupMovie} from '../../store/actions';
+import {changeUserData} from '../../store/api-actions';
 
 type MovieCardProps = {
   movieCard: MovieType;
@@ -11,13 +12,19 @@ type MovieCardProps = {
 
 function MovieCard({movieCard, onOpenPopup}:MovieCardProps) {
   const dispatch = useAppDispatch();
-  const {filmInfo, comments, userDetails, id} = movieCard;
+  const {filmInfo, comments, userDetails} = movieCard;
   const {title, totalRating, poster, description, runtime, release, genre } = filmInfo;
   const {favorite, watchlist, alreadyWatched} = userDetails;
 
   const setupDescription = ():string => description.length < BREAK_POINT_COUNT ? description : getShortDescription(description);
 
-  const movieControlButtonClickHandler = (newUserDetails:newUserDetailsType) => dispatch(changeUserDetails(newUserDetails));
+  const movieControlButtonClickHandler = ({key, value}:newUserDetailsType) => {
+    const newMovieCardData:MovieType= {
+      ...movieCard,
+      userDetails: {...userDetails, [key]: value}
+    };
+    dispatch(changeUserData(newMovieCardData));
+  };
 
   const showDetailsClickHandler = () => {
     dispatch(fillPopupMovie(movieCard));
@@ -39,21 +46,21 @@ function MovieCard({movieCard, onOpenPopup}:MovieCardProps) {
       <div className="film-card__controls ">
         <button className={`film-card__controls-item film-card__controls-item--add-to-watchlist ${watchlist ? 'film-card__controls-item--active' : ''}`} type="button"
           onClick={() => {
-            movieControlButtonClickHandler({id: id, key: FilterButton.watchlist, value: !watchlist});
+            movieControlButtonClickHandler({key: FilterButton.watchlist, value: !watchlist});
           }}
         >
           Add to watchlist
         </button>
         <button className={`film-card__controls-item film-card__controls-item--mark-as-watched ${alreadyWatched ? 'film-card__controls-item--active' : ''}`} type="button"
           onClick={() => {
-            movieControlButtonClickHandler({id: id, key: FilterButton.alreadyWatched, value: !alreadyWatched});
+            movieControlButtonClickHandler({key: FilterButton.alreadyWatched, value: !alreadyWatched});
           }}
         >
           Mark as watched
         </button>
         <button className={`film-card__controls-item film-card__controls-item--favorite ${favorite ? 'film-card__controls-item--active' : ''}`} type="button"
           onClick={() => {
-            movieControlButtonClickHandler({id: id, key: FilterButton.favorite, value: !favorite});
+            movieControlButtonClickHandler({key: FilterButton.favorite, value: !favorite});
           }}
         >
           Mark as favorite
